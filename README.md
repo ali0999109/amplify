@@ -129,6 +129,72 @@
 
 # Create a Lambda Function for Handling Requests
 
+- Go to the AWS Lambda console
+- Click Create function.
+- Keep the default Author from scratch card selected.
+- Enter RequestUnicorn in the Name field.
+- Select Node.js 18.x for the Runtime.
+- Expand Change default execution role under Permissions.
+- Ensure Use an existing role is selected from the Role dropdown.
+- Select WildRydesLambda from the Existing Role dropdown.
+  ![image](https://github.com/ali0999109/amplify/assets/145396907/889c0b73-9bfa-4225-b369-cb09cc677421)
+
+- Choose Create function.
+- Scroll down to the Function code section and replace the existing code in the index.js code editor with the contents of requestUnicorn.js.
+- https://webapp.serverlessworkshops.io/3-serverlessbackend/4-lambda/requestUnicorn.js
+- Click Deploy in the upper right above the code editor.
+  ![image](https://github.com/ali0999109/amplify/assets/145396907/9cad602c-0de9-4e8e-bc28-4f9349571099)
+
+- For this module you will test the function that you built using the AWS Lambda console. In the next module you will add a REST API with API Gateway so you can invoke your function from the browser-based application that you deployed in the first module.
+
+- From Test Tab, Configure test event.
+  ![image](https://github.com/ali0999109/amplify/assets/145396907/7508e69e-945f-4582-85e9-dee3fb5a3dda)
+
+- Keep Create new test event selected.
+- Enter TestRequestEvent in the Event name field
+- Copy and paste the following test event into the editor:
+- {
+    "path": "/ride",
+    "httpMethod": "POST",
+    "headers": {
+        "Accept": "*/*",
+        "Authorization": "eyJraWQiOiJLTzRVMWZs",
+        "content-type": "application/json; charset=UTF-8"
+    },
+    "queryStringParameters": null,
+    "pathParameters": null,
+    "requestContext": {
+        "authorizer": {
+            "claims": {
+                "cognito:username": "the_username"
+            }
+        }
+    },
+    "body": "{\"PickupLocation\":{\"Latitude\":47.6174755835663,\"Longitude\":-122.28837066650185}}"
+}
+
+
+
+- Click Save. Click Test.
+- From Test Tab, expand the Details section of the Execution result section.
+- Verify that the execution succeeded and that the function result looks like the following:
+ ![image](https://github.com/ali0999109/amplify/assets/145396907/42739344-bab8-48f4-a423-ed0306f55654)
+
+
+
+# Create a New REST API
+
+
+
+
+
+  
+
+  
+
+
+  
+
 -
 
 
