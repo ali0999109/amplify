@@ -3,7 +3,7 @@
 
 ![image](https://github.com/ali0999109/amplify/assets/145396907/39f94bb8-d3b5-444b-81e7-7b58fe3010a9)
 
-
+k
 # Setup cloud 9
 - Go to cloud 9 click create environment and use the same region for everything
 - Enter wildrydes-webapp-development into Name and optionally provide a Description.
@@ -183,6 +183,91 @@
 
 
 # Create a New REST API
+- Go to the Amazon API Gateway Console, click Create API
+- On the REST API card, choose Build.
+- In the section Create new API select New API to clear the example API definition.
+- Enter WildRydes for the API Name.
+- Select Regional from the Endpoint Type dropdown.
+- Create api
+
+# Cognito
+- Amazon API Gateway can use the JWT tokens returned by Cognito User Pools to authenticate API calls. In this step you’ll configure an authorizer for your API to use the user pool you 
+  created in User Management.
+- Under your newly created API, choose Authorizers.
+- Choose Create New Authorizer.
+- Enter WildRydes for the Authorizer name.
+- Select Cognito for the type.
+- In the Region drop-down under Cognito User Pool, select the Region where you created your Cognito user pool in the User Management module (by default the current region should be selected).
+- Enter wildrydes in the Cognito User Pool input, the name will auto-complete and allow you to select the name of the user pool that was generated when the user pool was created.
+- Enter Authorization for the Token Source
+- Create
+  ![image](https://github.com/ali0999109/amplify/assets/145396907/7ca5ea82-00df-4e60-86f8-de7b6670efad)
+
+# Create a new resource and method
+- Create a new resource called /ride within your API. Then create a POST method for that resource and configure it to use a Lambda proxy integration backed by the RequestUnicorn 
+  function you created in the first step of this module.
+- In the left nav, click on Resources under your WildRydes API.
+- From the Actions dropdown select Create Resource.
+- Enter ride as the Resource Name.
+- Ensure the Resource Path is set to ride.
+- Select Enable API Gateway CORS for the resource.
+- Choose Create Resource.
+  ![image](https://github.com/ali0999109/amplify/assets/145396907/74dfd343-b8ec-477e-a18f-378109648739)
+
+- With the newly created /ride resource selected, from the Action dropdown select Create Method.
+- Select POST from the new dropdown that appears, then click the checkmark.
+  ![image](https://github.com/ali0999109/amplify/assets/145396907/26fbd04c-f333-4f8d-afad-2640b2bd7792)
+- Select Lambda Function for the integration type.
+- Check the box for Use Lambda Proxy integration.
+- Select the Region you are using for Lambda Region.
+- Enter the name of the function you created in the previous module, RequestUnicorn, for Lambda Function.
+- Choose Save. Please note, if you get an error that you function does not exist, check that the region you selected matches the one you used in the previous module.
+  ![image](https://github.com/ali0999109/amplify/assets/145396907/316238ee-b6c5-4225-b8e9-48385ff68915)
+- When prompted to give Amazon API Gateway permission to invoke your function, choose OK.
+- Select the Method Request card.
+- Choose the pencil icon next to Authorization.
+- Select the WildRydes Cognito user pool authorizer from the drop-down list, and click the checkmark icon.
+  ![image](https://github.com/ali0999109/amplify/assets/145396907/1384aa5a-64e1-4360-8192-2770c04c9b8b)
+
+# Deploy Your API
+- In the Actions drop-down list select Deploy API.
+- Select [New Stage] in the Deployment stage drop-down list.
+- Enter prod for the Stage Name.
+- Choose Deploy.
+- Record the Invoke URL. You will use it in the next section.
+
+# Update the Website Config
+- On your Cloud9 development environment open src/config.js
+- Update the invokeUrl setting under the api key in the config.js file. Set the value to the Invoke URL for the deployment stage your created in the previous section. An example of a 
+  complete config.js file is included below. Note: The actual URL in your file will be differ
+  module.exports = {
+    api: {
+        invokeUrl: 'https://rfk14x9w40.execute-api.us-east-1.amazonaws.com/prod'
+    }
+}
+
+ - Save the modified file making sure the filename is still config.js
+ - Commit the changes to your git repository:
+ - git add src/config.js 
+ - git commit -m "Configure API invokeURL"
+ - git push
+# Implementation Validation
+ - Visit /ride under your website domain.
+ - If you are redirected to the sign in page, sign in with the user you created in the previous module.
+ - After the map has loaded, click anywhere on the map to set a pickup location.
+ - Choose Request Unicorn. You should see a notification in the right sidebar that a unicorn is on its way and then see a unicorn icon fly to your pickup location.
+   
+
+
+
+
+
+
+
+
+  
+
+
 
 
 
